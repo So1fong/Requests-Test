@@ -20,22 +20,14 @@ class ViewController: UIViewController
     func createNewSession()
     {
         guard let url = URL(string: "https://bnet.i-partner.ru/testAPI/") else { return }
-        let parameters = ["a":"new_session"]
+        let session = URLSession.shared
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.setValue("token", forHTTPHeaderField: "cZl7kQI-8H-H4HQhWc")
-        //request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        
-        guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: []) else { return }
-        request.httpBody = httpBody
-        
-        let session = URLSession.shared
+        let requestStr = "a=new_session"
+        request.httpBody = requestStr.data(using: .utf8)
+        request.addValue("cZl7kQI-8H-H4HQhWc", forHTTPHeaderField: "token")
+        request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         session.dataTask(with: request) { (data, response, error)  in
-            if let response = response
-            {
-                print(response)
-            }
             guard let data = data else { return }
             do
             {
