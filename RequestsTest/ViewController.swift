@@ -17,13 +17,9 @@ class ViewController: UIViewController
     override func viewDidLoad()
     {
         super.viewDidLoad()
-    }
-    
-    @IBAction func newSessionButtonTapped(_ sender: UIButton)
-    {
         request.createNewSession()
     }
-
+    
     
     @IBAction func showUserListButtonTapped(_ sender: UIButton)
     {
