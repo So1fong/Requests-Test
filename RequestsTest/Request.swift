@@ -33,6 +33,8 @@ struct userEntry: Codable
     var id: String
 }
 
+var vc = ViewController()
+
 class Request
 {
     func createNewSession()
@@ -113,22 +115,32 @@ class Request
                 print(answer)
                 let numberOfElements = answer.data[0].count
                 print("num of elements = \(numberOfElements)")
-                for i in 0...numberOfElements-1
+                if numberOfElements > 0
                 {
-                    daArray.append(answer.data[0][i].da)
-                    dmArray.append(answer.data[0][i].dm)
-                    bodyArray.append(answer.data[0][i].body)
+                    for i in 0...numberOfElements-1
+                    {
+                        if !daArray.contains(answer.data[0][i].da)
+                        {
+                            daArray.append(answer.data[0][i].da)
+                        }
+                        if !dmArray.contains(answer.data[0][i].dm)
+                        {
+                            dmArray.append(answer.data[0][i].dm)
+                        }
+                        if !bodyArray.contains(answer.data[0][i].body)
+                        {
+                            bodyArray.append(answer.data[0][i].body)
+                        }
+                    }
                 }
                 print(daArray)
-                //print(answer.data[0][0].body)
-                //print(answer.data[0].count)
-                
             }
             catch
             {
                 print(error)
             }
             }.resume()
+            //vc.reloadTableView()
     }
     
 }

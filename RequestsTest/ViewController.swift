@@ -13,7 +13,6 @@ var bodyArray = ["entry"]
 var daArray = ["da"]
 var dmArray = ["dm"]
 let request: Request = Request()
-var testArray: [String] = ["1", "2", "3", "4"]
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
 {
@@ -24,7 +23,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ViewControllerTableViewCell
         cell.daLabel.text = daArray[indexPath.row]//"da"
-        cell.dmLabel.text = dmArray[indexPath.row]//"dm"
+        if daArray[indexPath.row] != dmArray[indexPath.row]
+        {
+            cell.dmLabel.text = dmArray[indexPath.row]//"dm"
+        }
+        else
+        {
+            cell.dmLabel.text = ""
+        }
         cell.entryLabel.text = bodyArray[indexPath.row]
         return cell
     }
@@ -40,10 +46,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
+    func reloadTableView()
+    {
+        tableView.reloadData()
+    }
     
     @IBAction func showUserListButtonTapped(_ sender: UIButton)
     {
         request.showUserList()
+        tableView.reloadData()
     }
 }
 
