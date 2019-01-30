@@ -131,6 +131,10 @@ class Request
                         {
                             bodyArray.append(answer.data[0][i].body)
                         }
+                        if !idArray.contains(answer.data[0][i].id)
+                        {
+                            idArray.append(answer.data[0][i].id)
+                        }
                     }
                 }
                 print(daArray)

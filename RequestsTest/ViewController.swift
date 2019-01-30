@@ -12,6 +12,8 @@ var sessionId: String = ""
 var bodyArray = ["entry"]
 var daArray = ["da"]
 var dmArray = ["dm"]
+var idArray = ["id"]
+var myIndex = 0
 let request: Request = Request()
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
@@ -22,10 +24,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ViewControllerTableViewCell
-        cell.daLabel.text = daArray[indexPath.row]//"da"
+        cell.daLabel.text = daArray[indexPath.row]
         if daArray[indexPath.row] != dmArray[indexPath.row]
         {
-            cell.dmLabel.text = dmArray[indexPath.row]//"dm"
+            cell.dmLabel.text = dmArray[indexPath.row]
         }
         else
         {
@@ -46,6 +48,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+        myIndex = indexPath.row
+        performSegue(withIdentifier: "segue", sender: self)
+    }
+    
     func reloadTableView()
     {
         tableView.reloadData()
@@ -55,6 +63,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     {
         request.showUserList()
         tableView.reloadData()
+        //print("selected row = \(tableView.indexPathForSelectedRow)")
     }
 }
 
