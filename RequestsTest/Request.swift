@@ -19,6 +19,20 @@ struct dataStruct: Codable
     var session: String
 }
 
+struct userList: Codable
+{
+    var data: [[userEntry]]
+    var status: Int
+}
+
+struct userEntry: Codable
+{
+    var body: String
+    var da: String
+    var dm: String
+    var id: String
+}
+
 class Request
 {
     func createNewSession()
@@ -94,9 +108,21 @@ class Request
             {
                 let json = try JSONSerialization.jsonObject(with: data, options: [])
                 print(json)
-                //let answer = try JSONDecoder().decode(newSessionAnswer.self, from: data)
-                //print("Parsed:")
-                //print(answer)
+                let answer = try JSONDecoder().decode(userList.self, from: data)
+                print("Parsed user list:")
+                print(answer)
+                let numberOfElements = answer.data[0].count
+                print("num of elements = \(numberOfElements)")
+                for i in 0...numberOfElements-1
+                {
+                    daArray.append(answer.data[0][i].da)
+                    dmArray.append(answer.data[0][i].dm)
+                    bodyArray.append(answer.data[0][i].body)
+                }
+                print(daArray)
+                //print(answer.data[0][0].body)
+                //print(answer.data[0].count)
+                
             }
             catch
             {
