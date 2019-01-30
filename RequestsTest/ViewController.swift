@@ -9,10 +9,10 @@
 import UIKit
 
 var sessionId: String = ""
-var bodyArray = ["entry"]
-var daArray = ["da"]
-var dmArray = ["dm"]
-var idArray = ["id"]
+var bodyArray: [String] = []
+var daArray: [String] = []
+var dmArray: [String] = []
+var idArray: [String] = []
 var myIndex = 0
 let request: Request = Request()
 
