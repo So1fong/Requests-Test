@@ -54,7 +54,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         performSegue(withIdentifier: "segue", sender: self)
     }
     
-    func reloadTableView()
+    @objc func reloadTableView()
     {
         tableView.reloadData()
     }
@@ -62,8 +62,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBAction func showUserListButtonTapped(_ sender: UIButton)
     {
         request.showUserList()
-        tableView.reloadData()
-        //print("selected row = \(tableView.indexPathForSelectedRow)")
+        let _ = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(reloadTableView), userInfo: nil, repeats: false)
     }
 }
 
