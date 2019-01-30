@@ -45,7 +45,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         request.createNewSession()
         tableView.reloadData()
-        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
