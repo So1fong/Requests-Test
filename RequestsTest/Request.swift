@@ -102,8 +102,7 @@ class Request
     
     func showUserList()
     {
-        self.delegate?.showAlertController()
-        guard let url = URL(string: "https://bnet.iu-partner.ru/testAPI/") else { return }
+        guard let url = URL(string: "https://bnet.i-partner.ru/testAPI/") else { return }
         let session = URLSession.shared
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -112,6 +111,17 @@ class Request
         request.addValue("cZl7kQI-8H-H4HQhWc", forHTTPHeaderField: "token")
         request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         session.dataTask (with: request) { (data, response, error)  in
+            if error != nil
+            {
+                if let error = error as? NSError
+                {
+                    if error.domain == NSURLErrorDomain || error.code == NSURLErrorCannotConnectToHost
+                    {
+                        self.delegate?.showAlertController()
+                    }
+                }
+                return
+            }
             guard let data = data else { return }
             do
             {
@@ -147,18 +157,7 @@ class Request
                 print(daArray)
                 self.delegate?.reloadTableView()
             }
-            catch
-            {
-                print(error)
-                if let error = error as? NSError
-                {
-                    if error.domain == NSURLErrorDomain && error.code == NSURLErrorCannotConnectToHost
-                    {
-                        self.delegate?.showAlertController()
-                    }
-                }
-                
-            }
+            catch { }
                 }.resume()
     }
     
