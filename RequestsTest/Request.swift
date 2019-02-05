@@ -12,6 +12,7 @@ protocol RequestDelegate
 {
     func reloadTableView()
     func showAlertController()
+    func showSessionAlertController()
     func getSession(session: String)
 }
 
@@ -56,6 +57,17 @@ class Request
         request.addValue("cZl7kQI-8H-H4HQhWc", forHTTPHeaderField: "token")
         request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         session.dataTask(with: request) { (data, response, error)  in
+            if error != nil
+            {
+                if let error = error as? NSError
+                {
+                    if error.domain == NSURLErrorDomain || error.code == NSURLErrorCannotConnectToHost
+                    {
+                        self.delegate?.showSessionAlertController()
+                    }
+                }
+                return
+            }
             guard let data = data else { return }
             do
             {

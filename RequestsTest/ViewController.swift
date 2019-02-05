@@ -19,6 +19,16 @@ var idSession: String?
 
 class ViewController: UIViewController, RequestDelegate, UITableViewDataSource, UITableViewDelegate
 {
+    func showSessionAlertController()
+    {
+        DispatchQueue.main.async
+            {
+                let sessionAlertController = UIAlertController(title: "Ошибка", message: "Отсутствует идентификатор сессии", preferredStyle: .alert)
+                sessionAlertController.addAction(UIAlertAction(title: "Обновить", style: .default, handler: {(action: UIAlertAction) -> Void in request.createNewSession()}))
+                self.present(sessionAlertController, animated: true, completion: nil)
+        }
+    }
+    
     func getSession(session: String)
     {
         DispatchQueue.main.async
@@ -68,13 +78,11 @@ class ViewController: UIViewController, RequestDelegate, UITableViewDataSource, 
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        //tableView.rowHeight = UITableView.automaticDimension
-        tableView.rowHeight = 100
+        tableView.rowHeight = 200
         let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
         idSession = UserDefaults.standard.string(forKey: "idSession")
         if launchedBefore
         {
-            //sessionId = UserDefaults.standard.string(forKey: "idSession")
             sessionId = UserDefaults.standard.string(forKey: "idSession")!
             print(sessionId)
         }
@@ -102,7 +110,8 @@ class ViewController: UIViewController, RequestDelegate, UITableViewDataSource, 
     
     func showAlertController()
     {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async
+        {
             let alertController = UIAlertController(title: "Ошибка", message: "Отсутствует соединение с сервером", preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "Oк", style: .default, handler: nil))
             alertController.addAction(UIAlertAction(title: "Обновить", style: .default, handler: {(action: UIAlertAction) -> Void in request.showUserList()}))
