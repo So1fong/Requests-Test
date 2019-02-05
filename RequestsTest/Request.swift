@@ -89,9 +89,6 @@ class Request
             {
                 let json = try JSONSerialization.jsonObject(with: data, options: [])
                 print(json)
-                //let answer = try JSONDecoder().decode(newSessionAnswer.self, from: data)
-                //print("Parsed:")
-                //print(answer)
             }
             catch
             {

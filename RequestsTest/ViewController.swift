@@ -68,7 +68,7 @@ class ViewController: UIViewController, RequestDelegate, UITableViewDataSource, 
         DispatchQueue.main.async {
             let alertController = UIAlertController(title: "Ошибка", message: "Отсутствует соединение с сервером", preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "Oк", style: .default, handler: nil))
-            alertController.addAction(UIAlertAction(title: "Обновить", style: .default, handler: nil))
+            alertController.addAction(UIAlertAction(title: "Обновить", style: .default, handler: {(action: UIAlertAction) -> Void in request.showUserList()}))
             self.present(alertController, animated: true, completion: nil)
         }
     }
