@@ -11,6 +11,7 @@ import Foundation
 protocol RequestDelegate
 {
     func reloadTableView()
+    func showAlertController()
 }
 
 struct newSessionAnswer: Codable
@@ -37,8 +38,6 @@ struct userEntry: Codable
     var dm: String
     var id: String
 }
-
-var vc = ViewController()
 
 class Request
 {
@@ -103,7 +102,8 @@ class Request
     
     func showUserList()
     {
-        guard let url = URL(string: "https://bnet.i-partner.ru/testAPI/") else { return }
+        self.delegate?.showAlertController()
+        guard let url = URL(string: "https://bnet.iu-partner.ru/testAPI/") else { return }
         let session = URLSession.shared
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -150,6 +150,14 @@ class Request
             catch
             {
                 print(error)
+                if let error = error as? NSError
+                {
+                    if error.domain == NSURLErrorDomain && error.code == NSURLErrorCannotConnectToHost
+                    {
+                        self.delegate?.showAlertController()
+                    }
+                }
+                
             }
                 }.resume()
     }

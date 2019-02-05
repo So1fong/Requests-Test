@@ -63,6 +63,16 @@ class ViewController: UIViewController, RequestDelegate, UITableViewDataSource, 
         }
     }
     
+    func showAlertController()
+    {
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title: "Ошибка", message: "Отсутствует соединение с сервером", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Oк", style: .default, handler: nil))
+            alertController.addAction(UIAlertAction(title: "Обновить", style: .default, handler: nil))
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
     @IBAction func showUserListButtonTapped(_ sender: UIButton)
     {
         request.showUserList()
