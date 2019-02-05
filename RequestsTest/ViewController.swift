@@ -16,7 +16,8 @@ var idArray: [String] = []
 var myIndex = 0
 let request: Request = Request()
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
+
+class ViewController: UIViewController, RequestDelegate, UITableViewDataSource, UITableViewDelegate
 {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (bodyArray.count)
@@ -45,6 +46,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         request.createNewSession()
         tableView.reloadData()
+        request.delegate = self
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
@@ -55,13 +57,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @objc func reloadTableView()
     {
-        tableView.reloadData()
+        DispatchQueue.main.async
+        {
+            self.tableView.reloadData()
+        }
     }
     
     @IBAction func showUserListButtonTapped(_ sender: UIButton)
     {
         request.showUserList()
-        let _ = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(reloadTableView), userInfo: nil, repeats: false)
     }
 }
 

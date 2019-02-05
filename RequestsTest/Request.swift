@@ -8,6 +8,11 @@
 
 import Foundation
 
+protocol RequestDelegate
+{
+    func reloadTableView()
+}
+
 struct newSessionAnswer: Codable
 {
     var data: dataStruct
@@ -37,6 +42,8 @@ var vc = ViewController()
 
 class Request
 {
+    var delegate: RequestDelegate?
+    
     func createNewSession()
     {
         guard let url = URL(string: "https://bnet.i-partner.ru/testAPI/") else { return }
@@ -104,7 +111,7 @@ class Request
         request.httpBody = requestStr.data(using: .utf8)
         request.addValue("cZl7kQI-8H-H4HQhWc", forHTTPHeaderField: "token")
         request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        session.dataTask(with: request) { (data, response, error)  in
+        session.dataTask (with: request) { (data, response, error)  in
             guard let data = data else { return }
             do
             {
@@ -138,13 +145,13 @@ class Request
                     }
                 }
                 print(daArray)
+                self.delegate?.reloadTableView()
             }
             catch
             {
                 print(error)
             }
-            }.resume()
-            //vc.reloadTableView()
+                }.resume()
     }
     
 }
