@@ -48,6 +48,7 @@ class ViewController: UIViewController, RequestDelegate, UITableViewDataSource, 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ViewControllerTableViewCell
         cell.daLabel.text = daArray[indexPath.row]
+        cell.daLabel.sizeToFit()
         if daArray[indexPath.row] != dmArray[indexPath.row]
         {
 
@@ -57,6 +58,7 @@ class ViewController: UIViewController, RequestDelegate, UITableViewDataSource, 
         {
             cell.dmLabel.text = ""
         }
+        cell.dmLabel.sizeToFit()
         let numberOfSymbols = bodyArray[indexPath.row].count
         let temp = bodyArray[indexPath.row]
         var index: String.Index
@@ -69,6 +71,7 @@ class ViewController: UIViewController, RequestDelegate, UITableViewDataSource, 
             index = temp.index(temp.startIndex, offsetBy: 200)
         }
         cell.entryLabel.text = String(temp[..<index])
+        cell.entryLabel.sizeToFit()
         return cell
     }
     

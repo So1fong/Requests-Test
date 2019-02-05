@@ -19,6 +19,7 @@ class EntryDescriptionVC: UIViewController
     {
         super.viewDidLoad()
         bodyLabel.text = bodyArray[myIndex]
+        bodyLabel.sizeToFit()
         daLabel.text = daArray[myIndex]
         dmLabel.text = dmArray[myIndex]
         idLabel.text = idArray[myIndex]
