@@ -15,10 +15,22 @@ var dmArray: [String] = []
 var idArray: [String] = []
 var myIndex = 0
 let request: Request = Request()
-
+var idSession: String?
 
 class ViewController: UIViewController, RequestDelegate, UITableViewDataSource, UITableViewDelegate
 {
+    func getSession(session: String)
+    {
+        DispatchQueue.main.async
+        {
+            sessionId = session
+            idSession = sessionId
+            UserDefaults.standard.set(sessionId, forKey: "idSession")
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+            print(sessionId)
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (bodyArray.count)
     }
@@ -28,13 +40,25 @@ class ViewController: UIViewController, RequestDelegate, UITableViewDataSource, 
         cell.daLabel.text = daArray[indexPath.row]
         if daArray[indexPath.row] != dmArray[indexPath.row]
         {
+
             cell.dmLabel.text = dmArray[indexPath.row]
         }
         else
         {
             cell.dmLabel.text = ""
         }
-        cell.entryLabel.text = bodyArray[indexPath.row]
+        let numberOfSymbols = bodyArray[indexPath.row].count
+        let temp = bodyArray[indexPath.row]
+        var index: String.Index
+        if numberOfSymbols < 200
+        {
+            index = temp.index(temp.startIndex, offsetBy: numberOfSymbols)
+        }
+        else
+        {
+            index = temp.index(temp.startIndex, offsetBy: 200)
+        }
+        cell.entryLabel.text = String(temp[..<index])
         return cell
     }
     
@@ -44,7 +68,20 @@ class ViewController: UIViewController, RequestDelegate, UITableViewDataSource, 
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        request.createNewSession()
+        //tableView.rowHeight = UITableView.automaticDimension
+        tableView.rowHeight = 100
+        let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+        idSession = UserDefaults.standard.string(forKey: "idSession")
+        if launchedBefore
+        {
+            //sessionId = UserDefaults.standard.string(forKey: "idSession")
+            sessionId = UserDefaults.standard.string(forKey: "idSession")!
+            print(sessionId)
+        }
+        else
+        {
+            request.createNewSession()
+        }
         tableView.reloadData()
         request.delegate = self
     }

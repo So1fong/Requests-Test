@@ -12,6 +12,7 @@ protocol RequestDelegate
 {
     func reloadTableView()
     func showAlertController()
+    func getSession(session: String)
 }
 
 struct newSessionAnswer: Codable
@@ -48,6 +49,7 @@ class Request
         guard let url = URL(string: "https://bnet.i-partner.ru/testAPI/") else { return }
         let session = URLSession.shared
         var request = URLRequest(url: url)
+        var idSession = ""
         request.httpMethod = "POST"
         let requestStr = "a=new_session"
         request.httpBody = requestStr.data(using: .utf8)
@@ -63,8 +65,9 @@ class Request
                 print("Parsed:")
                 print(answer)
                 let str: String = answer.data.session
-                sessionId = str
-                print("sessionId = \(sessionId)")
+                idSession = str
+                print("sessionId = \(idSession)")
+                self.delegate?.getSession(session: idSession)
             }
             catch
             {

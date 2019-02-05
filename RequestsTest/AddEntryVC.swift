@@ -28,5 +28,6 @@ class AddEntryVC: UIViewController {
         {
             request.addEntry(bodyStr: text)
         }
+        navigationController?.popViewController(animated: true)
     }
 }
